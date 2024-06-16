@@ -1,0 +1,24 @@
+{
+   "mac": "de:vi:ce:ma:c0:01",
+   "firmware_version": "1.0",
+   "hardware_version": "v1",
+   "status": 1,
+   "location": {
+      "latitude": 45.0,
+      "longitude": 23.0
+   },
+   "temperature": 0,
+   "humidity": 0,
+   "inventory": {
+      "b1fdcd63-5fa0-4eb6-8807-4eae124153cd": {
+         "medicine_type": 1,
+         "medicine_name": "Paracetamol",
+         "left_amount": 30
+      },
+      "e1a38673-4033-4067-a6af-8712c193c52a": {
+         "medicine_type": 1,
+         "medicine_name": "Ibuprofen",
+         "left_amount": 97
+      }
+   }
+}
