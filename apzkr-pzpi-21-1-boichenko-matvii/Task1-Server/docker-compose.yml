@@ -1,0 +1,79 @@
+version: '3.11'
+
+services:
+  backend-psql:
+    image: postgres:11.2
+    container_name: pg-nure
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: 1qaz2wsx
+    ports:
+      - "5432:5432"
+    networks:
+      - backend-network
+    healthcheck:
+      test: pg_isready --dbname=postgres --host=localhost --port=5432 --username=postgres
+      start_period: 10s
+      interval: 5s
+      retries: 3
+      timeout: 10s
+    logging:
+      options:
+        max-size: 10m
+        max-file: "3"
+  fastapi:
+    build: .
+    container_name: fastapi-backend
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    networks:
+      - backend-network
+    env_file:
+      - .env
+    environment:
+      DATABASE_HOST: backend-psql
+      MQTT_BROKER_HOST: mosquitto-broker
+    depends_on:
+      backend-migration:
+        condition: service_completed_successfully
+      backend-psql:
+        condition: service_healthy
+      mosquitto-broker:
+        condition: service_started
+  backend-migration:
+    build:
+      context: .
+    env_file:
+      - .env
+    command: [ "alembic", "upgrade", "head" ]
+    environment:
+      DATABASE_HOST: backend-psql
+    depends_on:
+      backend-psql:
+        condition: service_healthy
+#      fastapi:
+#        condition: service_started
+    restart: 'no'
+    networks:
+      - backend-network
+  # mosquitto-broker from eclipse-mosquitto
+  mosquitto-broker:
+    image: eclipse-mosquitto
+    container_name: mosquitto-broker
+    ports:
+      - "1883:1883" #default mqtt port
+      - "9001:9001" #default mqtt port for websockets
+    volumes:
+      - ./mosquitto-broker/config:/mosquitto/config:rw
+      - ./mosquitto-broker/data:/mosquitto/data:rw
+      - ./mosquitto-broker/log:/mosquitto/log:rw
+    networks:
+      - backend-network
+
+networks:
+  backend-network:
+    name: backend-network
+    driver: bridge

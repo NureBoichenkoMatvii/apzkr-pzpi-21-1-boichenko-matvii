@@ -1,0 +1,94 @@
+# English (United States) translations for PROJECT.
+# Copyright (C) 2023 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2024-05-23 11:49+0300\n"
+"PO-Revision-Date: 2023-11-26 21:29+0200\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: en_US\n"
+"Language-Team: en_US <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.15.0\n"
+
+#: common/error_messages.py:7
+msgid "Machine doesn't have free slots"
+msgstr ""
+
+#: common/error_messages.py:11
+msgid "Machine already has a slot with such a medicine"
+msgstr ""
+
+#: common/error_messages.py:15
+msgid "Machine already has such a pickup point in its route"
+msgstr ""
+
+#: common/error_messages.py:19
+msgid "Such machine's slot is already occupied"
+msgstr ""
+
+#: common/error_messages.py:23
+msgid "Machine not found"
+msgstr ""
+
+#: common/error_messages.py:27
+msgid "Machine's slot not found"
+msgstr ""
+
+#: common/error_messages.py:31
+msgid "Machine's statistic not found"
+msgstr ""
+
+#: common/error_messages.py:35
+msgid "Machine's schedule not found"
+msgstr ""
+
+#: common/error_messages.py:39
+msgid "Machine's pickup point not found"
+msgstr ""
+
+#: common/error_messages.py:45
+msgid "Request wasn't authorized"
+msgstr ""
+
+#: common/error_messages.py:49
+msgid "Invalid API key"
+msgstr ""
+
+#: common/error_messages.py:55
+msgid "We didn't find such general localisation"
+msgstr ""
+
+#: common/error_messages.py:61
+msgid "Such order doesn't exist"
+msgstr ""
+
+#: common/error_messages.py:65
+msgid "Such order has no such medicine"
+msgstr ""
+
+#: common/error_messages.py:69
+msgid "Order already has a slot with such medicine"
+msgstr ""
+
+#: common/error_messages.py:75
+msgid "Such pickup point doesn't exist"
+msgstr ""
+
+#: common/error_messages.py:81
+msgid "Such medicine doesn't exist"
+msgstr ""
+
+#~ msgid "Machine has less slots than the given slot number"
+#~ msgstr ""
+
+#~ msgid "Machine already has a schedule with such pickup point in it"
+#~ msgstr ""
+
