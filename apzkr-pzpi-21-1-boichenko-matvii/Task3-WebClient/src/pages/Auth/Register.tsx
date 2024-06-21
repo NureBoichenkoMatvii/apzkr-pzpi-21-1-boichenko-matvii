@@ -6,8 +6,10 @@ import { UserRole } from '@stores/User/types.ts';
 import * as ApiClient from "@api/client";
 import { AppStore } from "@stores/index.ts";
 import { RegisterData } from "@pages/Auth/types.ts";
+import { useTranslation } from "react-i18next";
 
 const Register = () => {
+  const {t} = useTranslation();
   const [registerData, setRegisterData] = useState<RegisterData>({
     first_name: '',
     last_name: '',
@@ -59,38 +61,38 @@ const Register = () => {
   return (
     <Box bg={Colors.background} h='full' py={12} px={6}>
       <Box maxW='md' mx='auto' p={8} bg={Colors.primaryBeige} borderRadius='md' boxShadow='lg'>
-        <Text fontSize='2xl' mb={6} textAlign='center' color={Colors.textRegular}>Register</Text>
+        <Text fontSize='2xl' mb={6} textAlign='center' color={Colors.textRegular}>{t('register_title')}</Text>
         <form onSubmit={handleSubmit}>
           <Stack spacing={4}>
             <FormControl id='first_name' isRequired>
-              <FormLabel>First Name</FormLabel>
+              <FormLabel>{t('firstname_input')}</FormLabel>
               <Input type='text' name='first_name' value={registerData.first_name} onChange={handleChange} />
             </FormControl>
             <FormControl id='last_name' isRequired>
-              <FormLabel>Last Name</FormLabel>
+              <FormLabel>{t('lastname_input')}</FormLabel>
               <Input type='text' name='last_name' value={registerData.last_name} onChange={handleChange} />
             </FormControl>
             <FormControl id='email' isRequired>
-              <FormLabel>Email</FormLabel>
+              <FormLabel>{t('email_input')}</FormLabel>
               <Input type='email' name='email' value={registerData.email} onChange={handleChange} />
             </FormControl>
             <FormControl id='password' isRequired>
-              <FormLabel>Password</FormLabel>
+              <FormLabel>{t('password_input')}</FormLabel>
               <Input type='password' name='password' value={registerData.password} onChange={handleChange} />
             </FormControl>
             <FormControl id='birthdate'>
-              <FormLabel>Birthdate</FormLabel>
+              <FormLabel>{t('birthdate_input')}</FormLabel>
               <Input type='date' name='birthdate' value={registerData.birthdate} onChange={handleChange} />
             </FormControl>
             <FormControl id='role'>
               <Flex justifyContent='start' alignItems='center' gap='15px'>
-                <Text>Is Deliverer</Text>
+                <Text>{t('is_deliverer_input')}</Text>
                 <Switch colorScheme='green'
                         isChecked={registerData.role === UserRole.Deliverer}
                         onChange={handleRoleChange} />
               </Flex>
             </FormControl>
-            <Button type='submit' colorScheme='green' bg={Colors.primaryGreen} width='full'>Register</Button>
+            <Button type='submit' colorScheme='green' bg={Colors.primaryGreen} width='full'>{t('register_cta')}</Button>
           </Stack>
         </form>
       </Box>

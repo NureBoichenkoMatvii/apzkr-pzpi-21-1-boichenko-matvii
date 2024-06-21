@@ -17,7 +17,6 @@ from database.models import Order
 from database.models import OrderMedicine
 from database.models import PickupPoint
 from database.models import User
-from sqladmin.authentication import login_required
 
 
 class UserView(ModelView, model=User):
@@ -31,6 +30,8 @@ class MachineView(ModelView, model=Machine):
                    Machine.is_online, Machine.status, Machine.last_maintenance_date]
     column_searchable_list = [Machine.id, Machine.name, Machine.mac]
     column_sortable_list = [Machine.id, Machine.name, Machine.status]
+    column_details_exclude_list = [Machine.machine_pickup_points]
+    form_excluded_columns = column_details_exclude_list
 
 
 class MachineMedicineSlotView(ModelView, model=MachineMedicineSlot):
@@ -62,6 +63,8 @@ class OrderView(ModelView, model=Order):
     column_searchable_list = [Order.id, Order.user_id]
     column_sortable_list = [Order.id, Order.payment_amount, Order.created_at, Order.updated_at,
                             Order.payment_date]
+    column_details_exclude_list = [Order.order_medicines]
+    form_excluded_columns = column_details_exclude_list
 
 
 class OrderMedicineView(ModelView, model=OrderMedicine):

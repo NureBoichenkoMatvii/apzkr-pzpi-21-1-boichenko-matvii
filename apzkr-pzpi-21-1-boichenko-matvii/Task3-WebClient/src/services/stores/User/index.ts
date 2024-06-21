@@ -26,7 +26,7 @@ type Actions = {
 
 const initialState: UserState = {
   isSignedIn: false,
-  language: 'en',
+  language: 'eng',
   token: null,
   refresh_token: null,
   cart: {
@@ -87,7 +87,7 @@ export const useUserStore = create(
         }),
       clearCart: () =>
         set((state) => {
-          state.cart = {medicines: []};
+          state.cart = {payment_currency: 'EUR', medicines: []};
         }),
       setUser: (user) => set((state) => {
         state.user = user;

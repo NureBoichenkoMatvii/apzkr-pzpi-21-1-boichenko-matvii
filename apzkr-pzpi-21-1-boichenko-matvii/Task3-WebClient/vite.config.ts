@@ -11,6 +11,7 @@ export default defineConfig(({command, mode}) => {
   console.log(command, mode, process.env.REACT_APP_ENV);
   env.ENVIRONMENT = mode;
   env.API_URL = mode === 'production' ? 'https://matvi-nure-fastapi.azurewebsites.net' : 'http://localhost:8000';
+  env.API_KEY = '53b169138df9e89ccd3b49e50d98603f19af00eb8675c98f2bf900938b6096e7.75539bca6eb3cf3f6e2c6ebf60ed0db3';
 
   return {
     define: {
@@ -24,6 +25,7 @@ export default defineConfig(({command, mode}) => {
       alias: {
         '@pages': path.resolve(__dirname, 'src/pages'),
         '@styles': path.resolve(__dirname, 'src/styles'),
+        '@services': path.resolve(__dirname, 'src/services'),
         '@stores': path.resolve(__dirname, 'src/services/stores'),
         '@utils': path.resolve(__dirname, 'src/utils'),
         '@shared': path.resolve(__dirname, 'src/shared'),

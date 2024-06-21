@@ -7,12 +7,17 @@ import { useEffect } from "react";
 import { OpenAPI } from "@api/client";
 import { HttpStatusCode } from "axios";
 import { AppStore } from "@stores/index.ts";
+import i18n from "@services/i18n";
 
 
 export function Main(props: unknown) {
   const userStore = AppStore.useUserStore();
   const navigate = useNavigate();
+  const {language} = AppStore.useUserStore();
+
   useEffect(() => {
+    if (language)
+      i18n.changeLanguage(language.toLowerCase());
     if (!OpenAPI.TOKEN) {
       OpenAPI.TOKEN = userStore.token || '';
     }

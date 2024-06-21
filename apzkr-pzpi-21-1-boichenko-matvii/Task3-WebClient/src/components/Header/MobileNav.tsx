@@ -3,6 +3,8 @@ import { ChevronDownIcon } from '@chakra-ui/icons';
 import React from 'react';
 import { DeviceSpecificNavbarProps, NavbarItem } from './types.ts';
 import { AppStore } from "@stores/index.ts";
+import LanguageMenu from "@components/Header/LanguageMenu.tsx";
+import { useTranslation } from "react-i18next";
 
 export const MobileNav: React.FC<DeviceSpecificNavbarProps> = ({navbarItems}) => {
   const userStore = AppStore.useUserStore();
@@ -20,6 +22,7 @@ export const MobileNav: React.FC<DeviceSpecificNavbarProps> = ({navbarItems}) =>
         }).map((navItem) => (
           <MobileNavItem key={navItem.label} {...navItem} />
         ))}
+      <LanguageMenu/>
       </VStack>
     </Stack>
   );
@@ -27,6 +30,7 @@ export const MobileNav: React.FC<DeviceSpecificNavbarProps> = ({navbarItems}) =>
 
 const MobileNavItem = ({label, children, href, iconPath}: NavbarItem) => {
   const {isOpen, onToggle, onOpen, onClose} = useDisclosure();
+  const {t} = useTranslation();
 
   return (
     <Stack w='100%' spacing={4}
@@ -39,7 +43,7 @@ const MobileNavItem = ({label, children, href, iconPath}: NavbarItem) => {
               _hover={{textDecoration: 'none',}}>
         <Wrap>
           {iconPath && <Image src={iconPath} />}
-          <Text>{label}</Text>
+          <Text>{t(label)}</Text>
         </Wrap>
         {children && (
           <Icon as={ChevronDownIcon}
@@ -56,7 +60,7 @@ const MobileNavItem = ({label, children, href, iconPath}: NavbarItem) => {
               <Link key={child.label} py='8px' href={child.href} _hover={{textDecoration: 'none'}}>
                 <Wrap>
                   <Image src={child.iconPath} />
-                  {child.label}
+                  {t(child.label)}
                 </Wrap>
               </Link>
             ))}

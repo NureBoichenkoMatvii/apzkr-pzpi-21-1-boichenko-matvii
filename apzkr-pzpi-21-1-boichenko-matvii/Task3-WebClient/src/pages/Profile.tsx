@@ -29,6 +29,7 @@ import * as ApiClient from '@api/client';
 import { AppStore } from "@stores/index.ts";
 import { UserRole } from "@stores/User/types.ts";
 import { useMutation } from "@tanstack/react-query";
+import { useTranslation } from "react-i18next";
 
 const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -38,6 +39,7 @@ const Profile = () => {
   const toast = useToast();
   const navigate = useNavigate();
   const {user, onSignOut, setUser} = AppStore.useUserStore();
+  const {t} = useTranslation();
   const {mutate: fetchUser} = useMutation({
     mutationFn: async () => await ApiClient.usersCurrentUserApiV1UsersMeGet(),
     onSuccess: (res) => {
@@ -46,7 +48,7 @@ const Profile = () => {
     onError: error => {
       console.log('fetchUser err', error)
       toast({
-        title: 'Error fetching user data',
+        title: t('user_data_fetch_fail'),
         status: 'error',
         duration: 2000,
         isClosable: true,
@@ -78,7 +80,7 @@ const Profile = () => {
         setUser(updatedUser);
         setIsEditing(false);
         toast({
-          title: 'User updated successfully',
+          title: t('user_update_success'),
           status: 'success',
           duration: 2000,
           isClosable: true,
@@ -86,7 +88,7 @@ const Profile = () => {
       }
     } catch (error) {
       toast({
-        title: 'Error updating user data',
+        title: t('user_update_error'),
         status: 'error',
         duration: 2000,
         isClosable: true,
@@ -98,7 +100,7 @@ const Profile = () => {
     onSignOut();
     navigate('/login');
     toast({
-      title: 'Logged out successfully',
+      title: t('logout_success'),
       status: 'success',
       duration: 2000,
       isClosable: true,
@@ -110,7 +112,7 @@ const Profile = () => {
     try {
       if (passwordChangeData.newPassword !== passwordChangeData.newPasswordConfirm) {
         toast({
-          title: 'Passwords do not match',
+          title: t('pwds_not_matching_error'),
           status: 'error',
           duration: 2000,
           isClosable: true,
@@ -121,7 +123,7 @@ const Profile = () => {
         await ApiClient.usersPatchCurrentUserApiV1UsersMePatch(
           {requestBody: {password: passwordChangeData.newPassword}});
         toast({
-          title: 'Password changed successfully',
+          title: t('pwd_change_success'),
           status: 'success',
           duration: 2000,
           isClosable: true,
@@ -130,7 +132,7 @@ const Profile = () => {
       }
     } catch (error) {
       toast({
-        title: 'Error changing password',
+        title: t('pwd_change_error'),
         status: 'error',
         duration: 2000,
         isClosable: true,
@@ -153,25 +155,25 @@ const Profile = () => {
 
   return (
     <Box bg={Colors.background} h='full' py={12} px={6}>
-      <Box maxW='md' mx='auto' p={8} bg={Colors.primaryBeige} borderRadius='md' boxShadow='lg'>
-        <Text fontSize='2xl' mb={6} textAlign='center' color={Colors.textRegular}>Profile</Text>
+      <Box maxW='600px' mx='auto' p={8} bg={Colors.primaryBeige} borderRadius='md' boxShadow='lg'>
+        <Text fontSize='2xl' mb={6} textAlign='center' color={Colors.textRegular}>{t('profile_title')}</Text>
         {isEditing ? (
           <form>
             <Stack spacing={4}>
               <FormControl id='first_name' isRequired>
-                <FormLabel>First Name</FormLabel>
+                <FormLabel>{t('firstname_input')}</FormLabel>
                 <Input type='text' name='first_name' value={user.first_name} onChange={handleChange} />
               </FormControl>
               <FormControl id='last_name' isRequired>
-                <FormLabel>Last Name</FormLabel>
+                <FormLabel>{t('lastname_input')}</FormLabel>
                 <Input type='text' name='last_name' value={user.last_name} onChange={handleChange} />
               </FormControl>
               <FormControl id='email' isRequired>
-                <FormLabel>Email</FormLabel>
+                <FormLabel>{t('email_input')}</FormLabel>
                 <Input type='email' name='email' value={user.email} onChange={handleChange} />
               </FormControl>
               <FormControl id='birthdate'>
-                <FormLabel>Birthdate</FormLabel>
+                <FormLabel>{t('birthdate_input')}</FormLabel>
                 <Input type='date'
                        name='birthdate'
                        value={user.birthdate ? new Date(user.birthdate).toISOString().split('T')[0] : ''}
@@ -179,39 +181,40 @@ const Profile = () => {
               </FormControl>
               <FormControl id='role'>
                 <Flex justifyContent='start' alignItems='center' gap='15px'>
-                  <Text>Is Deliverer</Text>
+                  <Text>{t('is_deliverer_input')}</Text>
                   <Switch colorScheme='green' isChecked={user.role === UserRole.Deliverer} onChange={(e) =>
                     setUser({...user, role: e.target.checked ? UserRole.Deliverer : UserRole.Customer})} />
                 </Flex>
               </FormControl>
               <HStack w='full' gap='20px'>
-                <Button flex={1} variant='outline' onClick={() => setIsEditing(false)}>Cancel</Button>
-                <Button flex={1} onClick={handleSave} colorScheme='green' bg={Colors.primaryGreen}>Save</Button>
+                <Button flex={1} variant='outline' onClick={() => setIsEditing(false)}>{t('cancel_btn')}</Button>
+                <Button flex={1} onClick={handleSave} colorScheme='green' bg={Colors.primaryGreen}>{t('save_btn')}</Button>
               </HStack>
             </Stack>
           </form>
         ) : (
           <Stack spacing={4}>
-            <Text><strong>First Name:</strong> {user.first_name}</Text>
-            <Text><strong>Last Name:</strong> {user.last_name}</Text>
-            <Text><strong>Email:</strong> {user.email}</Text>
-            <Text><strong>Birthdate:</strong> {user.birthdate ? new Date(user.birthdate).toISOString().split('T')[0] : ''}
+            <Text><strong>{t('firstname_input')}:</strong> {user.first_name}</Text>
+            <Text><strong>{t('lastname_input')}:</strong> {user.last_name}</Text>
+            <Text><strong>{t('email_input')}:</strong> {user.email}</Text>
+            <Text><strong>{t('birthdate_input')}:</strong> {user.birthdate ? new Date(user.birthdate).toISOString().split('T')[0] : ''}
             </Text>
-            <Text><strong>Role:</strong> {user.role === UserRole.Customer ? 'Customer' : 'Deliverer'}</Text>
-            <Button onClick={() => setIsEditing(true)} colorScheme='green' variant='outline' width='full'>Edit
-              Profile</Button>
-            <Button onClick={onOpen} colorScheme='customBlack' variant='outline' width='full'>Change Password</Button>
-            <Button onClick={handleLogout} colorScheme='red' variant='outline' width='full'>Logout</Button>
+            <Text><strong>{t('role_input')}:</strong> {user.role === UserRole.Customer ? 'Customer' : 'Deliverer'}</Text>
+            <Button onClick={() => setIsEditing(true)} colorScheme='green' variant='outline' width='full'>
+              {t('edit_profile_btn')}
+            </Button>
+            <Button onClick={onOpen} colorScheme='customBlack' variant='outline' width='full'>{t('change_pwd_btn')}</Button>
+            <Button onClick={handleLogout} colorScheme='red' variant='outline' width='full'>{t('logout_btn')}</Button>
           </Stack>
         )}
         <Modal isCentered isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
           <ModalContent>
-            <ModalHeader>Change Password</ModalHeader>
+            <ModalHeader>{t('change_pwd_header')}</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
               <FormControl id='new_password' isRequired mt={4}>
-                <FormLabel>New Password</FormLabel>
+                <FormLabel>{t('new_pwd_input')}</FormLabel>
                 <Input type='password'
                        name='newPassword'
                        value={passwordChangeData.newPassword}
@@ -220,19 +223,19 @@ const Profile = () => {
               <FormControl id='new_password_confirm' isRequired mt={4}
                 // isInvalid={!!passwordChangeData.newPasswordConfirm && passwordChangeData.newPasswordConfirm !== passwordChangeData.newPassword}>
               >
-                <FormLabel>Confirm New Password</FormLabel>
+                <FormLabel>{t('new_pwd_confirmation_input')}</FormLabel>
                 <Input name='newPasswordConfirm'
                        type='password'
                        value={passwordChangeData.newPasswordConfirm}
                        onChange={handlePasswordChangeInput} />
                 <FormErrorMessage>
-                  Passwords don't match
+                  {t('pwds_not_matching_error')}
                 </FormErrorMessage>
               </FormControl>
             </ModalBody>
             <ModalFooter>
-              <Button variant='outline' mr={3} onClick={onClose}>Cancel</Button>
-              <Button colorScheme='green' bg={Colors.primaryGreen} onClick={handlePasswordChange}>Submit</Button>
+              <Button variant='outline' mr={3} onClick={onClose}>{t('cancel_btn')}</Button>
+              <Button colorScheme='green' bg={Colors.primaryGreen} onClick={handlePasswordChange}>{t('submit_btn')}</Button>
             </ModalFooter>
           </ModalContent>
         </Modal>

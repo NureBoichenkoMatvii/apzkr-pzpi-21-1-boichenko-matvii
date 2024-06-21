@@ -5,12 +5,14 @@ import { useNavigate } from 'react-router-dom';
 import { LoginData } from './types.ts';
 import * as ApiClient from '@api/client';
 import { AppStore } from "@stores/index.ts";
+import { useTranslation } from "react-i18next";
 
 const Login = () => {
   const [loginData, setLoginData] = useState<LoginData>({username: '', password: ''});
   const toast = useToast();
   const navigate = useNavigate();
   const userStore = AppStore.useUserStore();
+  const {t} = useTranslation();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {name, value} = e.target;
@@ -30,7 +32,7 @@ const Login = () => {
     if (isSuccessful) {
       userStore.authorize(data.access_token);
       toast({
-        title: 'Login successful',
+        title: t('login_success'),
         status: 'success',
         duration: 2000,
         isClosable: true,
@@ -38,7 +40,7 @@ const Login = () => {
       navigate('/profile');
     } else {
       toast({
-        title: 'Login failed',
+        title: t('login_fail'),
         status: 'error',
         duration: 2000,
         isClosable: true,
@@ -49,18 +51,18 @@ const Login = () => {
   return (
     <Box bg={Colors.background} h='full' py={12} px={6}>
       <Box maxW='md' mx='auto' p={8} bg={Colors.primaryBeige} borderRadius='md' boxShadow='lg'>
-        <Text fontSize='2xl' mb={6} textAlign='center' color={Colors.textRegular}>Login</Text>
+        <Text fontSize='2xl' mb={6} textAlign='center' color={Colors.textRegular}>{t('login_title')}</Text>
         <form onSubmit={handleSubmit}>
           <Stack spacing={4}>
             <FormControl id='email' isRequired>
-              <FormLabel>Username</FormLabel>
+              <FormLabel>{t('username_input')}</FormLabel>
               <Input type='username' name='username' value={loginData.username} onChange={handleChange} />
             </FormControl>
             <FormControl id='password' isRequired>
-              <FormLabel>Password</FormLabel>
+              <FormLabel>{t('password_input')}</FormLabel>
               <Input type='password' name='password' value={loginData.password} onChange={handleChange} />
             </FormControl>
-            <Button type='submit' colorScheme='green' bg={Colors.primaryGreen} width='full'>Login</Button>
+            <Button type='submit' colorScheme='green' bg={Colors.primaryGreen} width='full'>{t('login_cta')}</Button>
           </Stack>
         </form>
       </Box>

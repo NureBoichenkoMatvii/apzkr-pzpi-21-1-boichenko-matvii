@@ -8,24 +8,24 @@ import { NavbarItem } from './types.ts';
 import { UserRole } from "@stores/User/types.ts";
 
 export const NavbarItems: Array<NavbarItem> = [
-  {label: 'Home', href: `/home`},
-  {label: 'Login', href: '/login', isAuthRequired: false},
-  {label: 'Register', href: '/register', isAuthRequired: false},
-  {label: 'Profile', href: '/profile', isAuthRequired: true},
-  {label: 'Medicines', href: '/medicines', isAuthRequired: true, roles: [UserRole.Customer]},
-  {label: 'Card', href: '/card', isAuthRequired: true, roles: [UserRole.Customer]},
-  {label: 'My Orders', href: '/profile/orders', isAuthRequired: true, roles: [UserRole.Customer]},
+  {label: 'home_header', href: `/home`},
+  {label: 'login_header', href: '/login', isAuthRequired: false},
+  {label: 'register_header', href: '/register', isAuthRequired: false},
+  {label: 'profile_header', href: '/profile', isAuthRequired: true},
+  {label: 'medicine_header', href: '/medicines', isAuthRequired: true, roles: [UserRole.Customer]},
+  {label: 'cart_header', href: '/card', isAuthRequired: true, roles: [UserRole.Customer]},
+  {label: 'my_orders_header', href: '/profile/orders', isAuthRequired: true, roles: [UserRole.Customer]},
   {
-    label: 'Deliverer',
+    label: 'deliverer_header',
     roles: [UserRole.Deliverer],
     children: [
       {
-        label: 'Machines',
+        label: 'machines_header',
         href: '/deliverer/machines',
         isAuthRequired: true
       },
       {
-        label: 'Statistics',
+        label: 'statistics_header',
         href: '/deliverer/statistics',
         isAuthRequired: true
       },
@@ -51,6 +51,7 @@ export const Header: React.FC = props => {
           <Link href='/home'>
             <Image src={'/img/medmobile-logo.png'} objectFit='contain' h='50px' />
           </Link>
+
           <Flex display={{base: 'none', lg: 'flex'}}>
             <DesktopNav navbarItems={NavbarItems} />
           </Flex>

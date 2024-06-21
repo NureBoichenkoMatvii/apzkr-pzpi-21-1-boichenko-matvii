@@ -18,6 +18,8 @@ import { Colors } from '@styles/colors.ts';
 import { ChevronDownIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import { DeviceSpecificNavbarProps, NavbarItem, NavbarItemAuthRequirement } from './types.ts';
 import { AppStore } from "@stores/index.ts";
+import LanguageMenu from "@components/Header/LanguageMenu.tsx";
+import { useTranslation } from "react-i18next";
 
 export const DesktopNav: React.FC<DeviceSpecificNavbarProps> = ({navbarItems}) => {
   const userStore = AppStore.useUserStore();
@@ -32,11 +34,13 @@ export const DesktopNav: React.FC<DeviceSpecificNavbarProps> = ({navbarItems}) =
       return accessCheckResult;
     }).map((navItem) =>
       <DesktopNavItem navItem={navItem} key={navItem.label} />)}
+    <LanguageMenu/>
   </HStack>
 };
 
 const DesktopNavItem: React.FC<{ navItem: NavbarItem }> = ({navItem}) => {
   const {isOpen, onOpen, onClose, onToggle} = useDisclosure();
+  const {t} = useTranslation();
 
   return (
     <Box>
@@ -52,7 +56,7 @@ const DesktopNavItem: React.FC<{ navItem: NavbarItem }> = ({navItem}) => {
                 alignItems='center'
                 gap='6px'
                 textAlign='center'>
-            {navItem.label}
+            {t(navItem.label)}
             {navItem.children && (
               <Icon as={ChevronDownIcon}
                     transition={'all .25s ease-in-out'}
@@ -77,6 +81,8 @@ const DesktopNavItem: React.FC<{ navItem: NavbarItem }> = ({navItem}) => {
 };
 
 const DesktopSubNavItem = ({label, href, iconPath}: NavbarItem) => {
+  const {t} = useTranslation();
+
   return (
     <Link href={href}
           role={'group'}
@@ -88,7 +94,7 @@ const DesktopSubNavItem = ({label, href, iconPath}: NavbarItem) => {
         <Wrap>
           <Image src={iconPath} />
           <Text transition={'all .3s ease'}>
-            {label}
+            {t(label)}
           </Text>
         </Wrap>
         <Flex transition={'all .3s ease'}

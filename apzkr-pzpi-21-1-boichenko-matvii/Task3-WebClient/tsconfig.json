@@ -31,6 +31,7 @@
       "@utils/*": ["utils/*"],
       "@shared/*": ["shared/*"],
       "@hooks/*": ["hooks/*"],
+      "@services/*": ["services/*"],
       "@stores/*": ["services/stores/*"],
       "@components/*": ["components/*"],
     }

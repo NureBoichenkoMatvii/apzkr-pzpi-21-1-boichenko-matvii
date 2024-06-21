@@ -21,7 +21,7 @@ import * as ApiClient from '@api/client';
 import { GetOrderByIdResponseDto, OrderResponseDto } from '@api/client';
 import { AppStore } from '@stores/index';
 
-const orderStatuses = ['Created', 'Payed', 'In preparing'/*'Preorder'*/, 'In delivery', 'Completed', 'Canceled', 'Failed'];
+const orderStatuses = ['Created', 'Accounted' /*'Payed'*/, 'In preparing'/*'Preorder'*/, 'In delivery', 'Completed', 'Canceled', 'Failed'];
 
 const ProfileOrders = () => {
   const [orders, setOrders] = useState<OrderResponseDto[]>([]);
