@@ -26,8 +26,10 @@ import { AppStore } from '@stores/index';
 import { Medicine, MedicineCard } from './MedicineCard';
 import { Colors } from "@styles/colors.ts";
 import { useMutation } from "@tanstack/react-query";
+import { useTranslation } from "react-i18next";
 
 const Medicines = () => {
+  const {t} = useTranslation();
   const [medicines, setMedicines] = useState<Medicine[]>([]);
   const [filters, setFilters] = useState<MedicineSearchDto>({
     simple_filters: {},
@@ -53,7 +55,7 @@ const Medicines = () => {
     onError: error => {
       console.log('fetchMedicines err', error)
       toast({
-        title: 'Error fetching medicines',
+        title: t('fetch_medicines_error'),
         status: 'error',
         duration: 2000,
         isClosable: true,
@@ -105,7 +107,7 @@ const Medicines = () => {
     if (selectedMedicine) {
       addToCart(selectedMedicine, quantity);
       toast({
-        title: 'Medicine added to cart',
+        title: t('add_cart_medicine_success'),
         status: 'success',
         duration: 2000,
         isClosable: true,
@@ -117,7 +119,7 @@ const Medicines = () => {
   return (
     <Box bg={Colors.lightBeige} h='full' px={6}>
       <Box w='full'>
-        <Text fontSize='2xl' my={6} textAlign='center' color={Colors.textRegular}>Available Medicines</Text>
+        <Text fontSize='2xl' my={6} textAlign='center' color={Colors.textRegular}>{t('title_medicines')}</Text>
         <Stack direction={{base: 'column', lg: 'row'}}
                spacing={4}
                mb={6}
@@ -126,28 +128,28 @@ const Medicines = () => {
                borderRadius='md'
                boxShadow='lg'>
           <FormControl>
-            <FormLabel>Search substring</FormLabel>
+            <FormLabel>{t('search_substring_input')}</FormLabel>
             <Input type='text' name='search_substring' onChange={(e) => {
               setFilters({...filters, search_substring: e.target.value,});
             }} value={filters.search_substring || ''} />
           </FormControl>
           <FormControl>
-            <FormLabel>Prescription Needed</FormLabel>
+            <FormLabel>{t('prescriptions_needed_label')}</FormLabel>
             <Select name='prescription_needed' onChange={handleFilterChange} defaultValue='any'>
-              <option value='true'>Yes</option>
-              <option value='false'>No</option>
-              <option value='any'>Any</option>
+              <option value='true'>{t('y')}</option>
+              <option value='false'>{t('n')}</option>
+              <option value='any'>{t('any')}</option>
             </Select>
           </FormControl>
           <FormControl>
-            <FormLabel>Order By Name</FormLabel>
+            <FormLabel>{t('order_by_name_label')}</FormLabel>
             <Select name='desc' onChange={handleOrderChange} value={filters.order_by?.desc + ''}>
-              <option value='true'>Descending</option>
-              <option value='false'>Ascending</option>
+              <option value='true'>{t('order_by_descending')}</option>
+              <option value='false'>{t('order_by_ascending')}</option>
             </Select>
           </FormControl>
           <Button minW='200px' alignSelf='end' colorScheme='green' onClick={() => fetchMedicines()}>
-            Search
+            {t('search_btn')}
           </Button>
         </Stack>
         <Grid templateColumns='repeat(auto-fill, minmax(250px, 1fr))' gap={6}>
@@ -161,11 +163,11 @@ const Medicines = () => {
         <Flex align={'center'} justifyContent='center' my={6}>
           <Button w='100px' onClick={() => (filters.pagination?.offset !== undefined
             && handlePaginationChange(filters.pagination.offset - 10))} isDisabled={filters?.pagination?.offset === 0}>
-            Previous
+            {t('previous_btn')}
           </Button>
           <Button w='100px' onClick={() => (filters.pagination?.offset !== undefined
             && handlePaginationChange(filters.pagination.offset + 10))} isDisabled={medicines.length < 10}>
-            Next
+            {t('next_btn')}
           </Button>
         </Flex>
       </Box>
@@ -173,17 +175,17 @@ const Medicines = () => {
       <Modal isOpen={isOpen} onClose={onClose} isCentered>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Add to Cart</ModalHeader>
+          <ModalHeader>{t('title_add_to_cart')}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <FormControl>
-              <FormLabel>Quantity</FormLabel>
+              <FormLabel>{t('quantity_label')}</FormLabel>
               <Input type='number' value={quantity} onChange={(e) => setQuantity(Number(e.target.value))} min={1} />
             </FormControl>
           </ModalBody>
           <ModalFooter>
-            <Button variant='outline' mr={3} onClick={onClose}>Cancel</Button>
-            <Button colorScheme='green' onClick={handleAddToCart}>Add</Button>
+            <Button variant='outline' mr={3} onClick={onClose}>{t('cancel_btn')}</Button>
+            <Button colorScheme='green' onClick={handleAddToCart}>{t('add_btn')}</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

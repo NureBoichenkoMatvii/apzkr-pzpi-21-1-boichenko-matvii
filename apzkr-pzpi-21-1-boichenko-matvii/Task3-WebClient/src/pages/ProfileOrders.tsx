@@ -20,10 +20,12 @@ import { Colors } from '@styles/colors';
 import * as ApiClient from '@api/client';
 import { GetOrderByIdResponseDto, OrderResponseDto } from '@api/client';
 import { AppStore } from '@stores/index';
+import { useTranslation } from "react-i18next";
 
 const orderStatuses = ['Created', 'Accounted' /*'Payed'*/, 'In preparing'/*'Preorder'*/, 'In delivery', 'Completed', 'Canceled', 'Failed'];
 
 const ProfileOrders = () => {
+  const {t} = useTranslation();
   const [orders, setOrders] = useState<OrderResponseDto[]>([]);
   const [selectedOrder, setSelectedOrder] =
     useState<GetOrderByIdResponseDto | null>(null);
@@ -40,7 +42,7 @@ const ProfileOrders = () => {
       } catch (error) {
         console.error('Error fetching orders', error);
         toast({
-          title: 'Error fetching orders',
+          title: t('fetch_orders_error'),
           status: 'error',
           duration: 2000,
           isClosable: true,
@@ -63,7 +65,7 @@ const ProfileOrders = () => {
       } catch (error) {
         console.error('Error getting order by id', error);
         toast({
-          title: 'Error getting order by id',
+          title: t('get_order_by_id_error'),
           status: 'error',
           duration: 2000,
           isClosable: true,
@@ -80,16 +82,17 @@ const ProfileOrders = () => {
 
   return (
     <Box px={4}>
-      <Text bg={Colors.primaryBeige} fontSize='2xl' color={Colors.textRegular} py={4} textAlign={'center'}>Order
-        History</Text>
+      <Text bg={Colors.primaryBeige} fontSize='2xl' color={Colors.textRegular} py={4} textAlign={'center'}>
+        {t('title_order_history')}
+      </Text>
       <Table variant='simple'>
         <Thead>
           <Tr>
-            <Th>ID</Th>
-            <Th>Status</Th>
-            <Th>Price</Th>
-            <Th>Created At</Th>
-            <Th>Updated At</Th>
+            <Th>{t('id_label')}</Th>
+            <Th>{t('status_label')}</Th>
+            <Th>{t('price_label')}</Th>
+            <Th>{t('created_at_label')}</Th>
+            <Th>{t('updated_at_label')}</Th>
           </Tr>
         </Thead>
         <Tbody>
@@ -112,30 +115,32 @@ const ProfileOrders = () => {
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />
-          <DrawerHeader>Order Details</DrawerHeader>
+          <DrawerHeader>{t('order_details_header')}</DrawerHeader>
           <DrawerBody>
             {selectedOrder && (
               <>
-                <Text><strong>ID:</strong> {selectedOrder.id}</Text>
-                <Text><strong>Status:</strong> {orderStatuses[selectedOrder.status]}</Text>
-                <Text><strong>Price:</strong> {`${selectedOrder.payment_amount} ${selectedOrder.payment_currency}`}
+                <Text><strong>{t('id_label')}:</strong> {selectedOrder.id}</Text>
+                <Text><strong>{t('status_label')}:</strong> {orderStatuses[selectedOrder.status]}</Text>
+                <Text><strong>{t('price_label')}:</strong> {`${selectedOrder.payment_amount} ${selectedOrder.payment_currency}`}
                 </Text>
-                <Text><strong>Created At:</strong> {new Date(selectedOrder.created_at).toLocaleString()}</Text>
-                <Text><strong>Updated At:</strong> {new Date(selectedOrder.updated_at).toLocaleString()}</Text>
-                <Text><strong>Medicines:</strong></Text>
+                <Text><strong>{t('created_at_label')}:</strong> {new Date(selectedOrder.created_at).toLocaleString()}
+                </Text>
+                <Text><strong>{t('updated_at_label')}:</strong> {new Date(selectedOrder.updated_at).toLocaleString()}
+                </Text>
+                <Text><strong>{t('medicines_label')}:</strong></Text>
                 {selectedOrder.order_medicines.map(medicine => (
                   <Box key={medicine.id} ml={4}>
-                    <Text>Name: {medicine.medicine?.name}</Text>
-                    <Text>Count: {medicine.medicine_count}</Text>
+                    <Text>{t('name_label')}: {medicine.medicine?.name}</Text>
+                    <Text>{t('count_label')}: {medicine.medicine_count}</Text>
                   </Box>
                 ))}
-                <Text><strong>Pickup Point:</strong></Text>
+                <Text><strong>{t('pickup_point_label')}:</strong></Text>
                 <Box ml={4}>
-                  <Text>Country: {selectedOrder.pickup_point.location.country}</Text>
-                  <Text>Address: {selectedOrder.pickup_point.location.address}</Text>
+                  <Text>{t('country_label')}: {selectedOrder.pickup_point.location.country}</Text>
+                  <Text>{t('address_label')}: {selectedOrder.pickup_point.location.address}</Text>
                 </Box>
-                <Text><strong>Machine: </strong> {selectedOrder.machine?.name || 'N/A'}</Text>
-                <Text><strong>Arrival At: </strong>
+                <Text><strong>{t('machine_label')}: </strong> {selectedOrder.machine?.name || 'N/A'}</Text>
+                <Text><strong>{t('arrival_at_label')}: </strong>
                   {selectedOrder.machine_pickup_point?.arrival_at
                     ? new Date(selectedOrder.machine_pickup_point.arrival_at).toLocaleString() : 'N/A'}
                 </Text>

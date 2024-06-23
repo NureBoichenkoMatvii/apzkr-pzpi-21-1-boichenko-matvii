@@ -29,6 +29,7 @@ import { AppStore } from '@stores/index';
 import { Colors } from '@styles/colors';
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 type MedicineInfoDto = {
   id: string;
@@ -36,6 +37,7 @@ type MedicineInfoDto = {
 };
 
 const Cart = () => {
+  const {t} = useTranslation();
   const {user, cart, changeCartMedicineCount, deleteMedicineFromCart, clearCart} = AppStore.useUserStore();
   const [pickupPoint, setPickupPoint] = useState<PickupPointResponseDto | null>(null);
   const [machine, setMachine] = useState<MachineResponseDto | null>(null);
@@ -59,7 +61,7 @@ const Cart = () => {
     onError: (error) => {
       console.error('Error fetching pickup points', error);
       toast({
-        title: 'Error fetching pickup points',
+        title: t('pickup_points_fetch_error'),
         status: 'error',
         duration: 2000,
         isClosable: true,
@@ -77,7 +79,7 @@ const Cart = () => {
     onError: (error) => {
       console.error('Error fetching machines', error);
       toast({
-        title: 'Error fetching machines',
+        title: t('fetch_machines_error'),
         status: 'error',
         duration: 2000,
         isClosable: true,
@@ -88,7 +90,7 @@ const Cart = () => {
   const handleCreateOrder = async () => {
     if (!pickupPoint) {
       toast({
-        title: 'Please select a pickup point',
+        title: t('unselected_pickup_point_error'),
         status: 'error',
         duration: 2000,
         isClosable: true,
@@ -115,7 +117,7 @@ const Cart = () => {
     try {
       await ApiClient.createOrderApiV1OrdersPost({requestBody: orderData});
       toast({
-        title: 'Order created successfully',
+        title: t('create_order_success'),
         status: 'success',
         duration: 2000,
         isClosable: true,
@@ -125,7 +127,7 @@ const Cart = () => {
     } catch (error) {
       console.error('Error creating order', error);
       toast({
-        title: 'Error creating order',
+        title: t('create_order_error'),
         status: 'error',
         duration: 2000,
         isClosable: true,
@@ -152,14 +154,14 @@ const Cart = () => {
               borderRadius='md'
               boxShadow='lg'>
         <Text fontSize='2xl' w={'full'} mb={6} textAlign='center' color={Colors.textRegular}>
-          Cart
+          {t('title_cart')}
         </Text>
         <Stack gap={4} w='full' textAlign='start' align='stretch' borderRadius='md' bg={Colors.background} p={4}>
           <HStack>
-            <Text flex={2}>Name</Text>
-            <Text flex={1}>Price</Text>
-            <Text flex={1}>Count</Text>
-            <Text flex={1}>Actions</Text>
+            <Text flex={2}>{t('cart_column_name')}</Text>
+            <Text flex={1}>{t('cart_column_price')}({cart.payment_currency})</Text>
+            <Text flex={1}>{t('cart_column_count')}</Text>
+            <Text flex={1}>{t('cart_column_actions')}</Text>
           </HStack>
           {cart.medicines && cart.medicines.length > 0 ? cart.medicines.map((med) => (
             <HStack key={med.id}>
@@ -176,15 +178,15 @@ const Cart = () => {
                 </NumberInputStepper>
               </NumberInput>
               <Box flex={1}><Button colorScheme='red' variant='solid' onClick={() => deleteMedicineFromCart(med.id)}>
-                Delete
+                {t('delete_btn')}
               </Button></Box>
             </HStack>
-          )) : <Text>No Items</Text>}
+          )) : <Text>{t('cart_no_items_msg')}</Text>}
         </Stack>
         <HStack>
-          <Text>Pickup Point: {pickupPoint?.location?.country} {pickupPoint?.location?.address}</Text>
+          <Text>{t('cart_pickup_point_text')} {pickupPoint?.location?.country} {pickupPoint?.location?.address}</Text>
           <Button colorScheme='customBlack' onClick={onOpen}>
-            Change
+            {t('change_btn')}
           </Button>
         </HStack>
         {/*<HStack>*/}
@@ -193,7 +195,7 @@ const Cart = () => {
         {/*    Change*/}
         {/*  </Button>*/}
         {/*</HStack>*/}
-        <Text>Total price: {(cart.medicines || []).reduce((totalSum, cur) => {
+        <Text>{t('cart_total_price_text')} {(cart.medicines || []).reduce((totalSum, cur) => {
           return totalSum + cur.count * cur.price;
         }, 0).toFixed(2)} {cart.payment_currency}</Text>
         <Button isDisabled={cart.medicines && cart.medicines.length < 1}
@@ -201,14 +203,14 @@ const Cart = () => {
                 colorScheme='green'
                 onClick={handleCreateOrder}
                 isLoading={isLoading}>
-          Create Order
+          {t('create_order_btn')}
         </Button>
 
         {/* Pickup Point Modal */}
         <Modal isOpen={isOpen} onClose={onClose} isCentered>
           <ModalOverlay />
           <ModalContent w={'90%'}>
-            <ModalHeader>Choose Pickup Point</ModalHeader>
+            <ModalHeader>{t('choose_pickup_point_header')}</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
               <Wrap gap={4} m={4}>
@@ -226,7 +228,7 @@ const Cart = () => {
                            setPickupPoint(point);
                            onClose();
                            toast({
-                             title: 'Pickup point selected',
+                             title: t('select_pickup_point_success'),
                              status: 'success',
                              duration: 2000,
                              isClosable: true,
@@ -247,7 +249,7 @@ const Cart = () => {
         <Modal isOpen={isMachineOpen} onClose={onMachineClose} isCentered>
           <ModalOverlay />
           <ModalContent>
-            <ModalHeader>Choose Machine</ModalHeader>
+            <ModalHeader>{t('choose_machine_header')}</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
               <Wrap gap={4} m={4}>
@@ -263,7 +265,7 @@ const Cart = () => {
                          setMachine(machine);
                          onMachineClose();
                          toast({
-                           title: 'Machine selected',
+                           title: t('choose_machine_success'),
                            status: 'success',
                            duration: 2000,
                            isClosable: true,
@@ -279,7 +281,7 @@ const Cart = () => {
                 setMachine(null);
                 onMachineClose();
               }}>
-                Clear selection
+                {t('clear_selection_btn')}
               </Button>
             </ModalFooter>
           </ModalContent>

@@ -42,7 +42,7 @@ const Register = () => {
     if (isSuccessful) {
       userStore.authorize(loginData.access_token);
       toast({
-        title: 'Registration successful',
+        title: t('register_success'),
         status: 'success',
         duration: 2000,
         isClosable: true,
@@ -50,7 +50,7 @@ const Register = () => {
       navigate('/profile');
     } else {
       toast({
-        title: 'Registration failed',
+        title: t('register_fail'),
         status: 'error',
         duration: 2000,
         isClosable: true,
