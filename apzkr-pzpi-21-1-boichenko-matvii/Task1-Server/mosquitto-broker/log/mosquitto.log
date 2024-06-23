@@ -20034,3 +20034,67 @@ To fix this, use `chmod 0700 /mosquitto/config/pwfile`.
 1718989299: Sending PINGRESP to MqttApiClient
 1718989359: Received PINGREQ from MqttApiClient
 1718989359: Sending PINGRESP to MqttApiClient
+1719174673: mosquitto version 2.0.18 starting
+1719174673: Config loaded from /mosquitto/config/mosquitto.conf.
+1719174673: Warning: File /mosquitto/config/pwfile has world readable permissions. Future versions will refuse to load this file.
+To fix this, use `chmod 0700 /mosquitto/config/pwfile`.
+1719174673: Opening ipv4 listen socket on port 1883.
+1719174673: Opening ipv6 listen socket on port 1883.
+1719174673: Opening websockets listen socket on port 9001.
+1719174673: mosquitto version 2.0.18 running
+1719174714: New connection from 172.21.0.4:49657 on port 1883.
+1719174715: Client <unknown> closed its connection.
+1719174715: New connection from 172.21.0.4:47955 on port 1883.
+1719174715: New client connected from 172.21.0.4:47955 as MqttApiClient (p2, c1, k60, u'admin').
+1719174715: No will message specified.
+1719174715: Sending CONNACK to MqttApiClient (0, 0)
+1719174743: Received DISCONNECT from MqttApiClient
+1719174743: Client MqttApiClient disconnected.
+1719174752: mosquitto version 2.0.18 terminating
+1719174752: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1719174993: mosquitto version 2.0.18 starting
+1719174993: Config loaded from /mosquitto/config/mosquitto.conf.
+1719174993: Warning: File /mosquitto/config/pwfile has world readable permissions. Future versions will refuse to load this file.
+To fix this, use `chmod 0700 /mosquitto/config/pwfile`.
+1719174993: Opening ipv4 listen socket on port 1883.
+1719174993: Opening ipv6 listen socket on port 1883.
+1719174993: Opening websockets listen socket on port 9001.
+1719174993: mosquitto version 2.0.18 running
+1719175018: New connection from 172.21.0.4:58391 on port 1883.
+1719175019: Client <unknown> closed its connection.
+1719175019: New connection from 172.21.0.4:36469 on port 1883.
+1719175019: New client connected from 172.21.0.4:36469 as MqttApiClient (p2, c1, k60, u'admin').
+1719175019: No will message specified.
+1719175019: Sending CONNACK to MqttApiClient (0, 0)
+1719175079: Received PINGREQ from MqttApiClient
+1719175079: Sending PINGRESP to MqttApiClient
+1719175140: Received PINGREQ from MqttApiClient
+1719175140: Sending PINGRESP to MqttApiClient
+1719175200: Received PINGREQ from MqttApiClient
+1719175200: Sending PINGRESP to MqttApiClient
+1719175260: Received PINGREQ from MqttApiClient
+1719175260: Sending PINGRESP to MqttApiClient
+1719175321: Received PINGREQ from MqttApiClient
+1719175321: Sending PINGRESP to MqttApiClient
+1719175381: Received PINGREQ from MqttApiClient
+1719175381: Sending PINGRESP to MqttApiClient
+1719175441: Received PINGREQ from MqttApiClient
+1719175441: Sending PINGRESP to MqttApiClient
+1719175501: Received PINGREQ from MqttApiClient
+1719175501: Sending PINGRESP to MqttApiClient
+1719175561: Received PINGREQ from MqttApiClient
+1719175561: Sending PINGRESP to MqttApiClient
+1719175621: Received PINGREQ from MqttApiClient
+1719175621: Sending PINGRESP to MqttApiClient
+1719175681: Received PINGREQ from MqttApiClient
+1719175681: Sending PINGRESP to MqttApiClient
+1719175741: Received PINGREQ from MqttApiClient
+1719175741: Sending PINGRESP to MqttApiClient
+1719175801: Received PINGREQ from MqttApiClient
+1719175801: Sending PINGRESP to MqttApiClient
+1719175861: Received PINGREQ from MqttApiClient
+1719175861: Sending PINGRESP to MqttApiClient
+1719175921: Received PINGREQ from MqttApiClient
+1719175921: Sending PINGRESP to MqttApiClient
+1719175981: Received PINGREQ from MqttApiClient
+1719175981: Sending PINGRESP to MqttApiClient
